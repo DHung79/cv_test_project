@@ -1,0 +1,9 @@
+const String initialRoute = '/';
+const String homeRoute = '/home';
+const String authenticationRoute = '/auth';
+const String forgotPasswordRoute = '/forgot-password';
+const String otpRoute = '/otp';
+const String resetPasswordRoute = '/reset-password';
+const String changePasswordRoute = '/change-password';
+const String cameraRoute = '/camera';
+const String pageNotFoundRoute = '/page-not-found';
