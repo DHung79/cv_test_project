@@ -2,7 +2,6 @@ import 'package:cv_test_project/core/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:cv_test_project/routes/route_names.dart';
 import 'package:cv_test_project/screens/layout_template.dart';
-import 'package:provider/provider.dart';
 import '../main.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,30 +12,40 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Widget dynamicIcon = Text('Drag the icon in here');
+  List<PackageModel> packages = [
+    PackageModel(name: 'graphql', route: graphqlRoute),
+    PackageModel(name: 'chopper', route: chopperRoute),
+  ];
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('this is home screen'),
-        ],
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: packages.length,
+        itemBuilder: (context, index) {
+          final package = packages[index];
+          return Container(
+            width: 150,
+            height: 150,
+            // color: Colors.blueAccent,
+            child: TextButton(
+              onPressed: () {
+                navigateTo(package.route);
+              },
+              child: Center(child: Text(package.name)),
+            ),
+          );
+        },
       ),
     );
   }
+}
 
-  Widget _buildDraggable() {
-    return Container(
-      width: 200,
-      height: 200,
-      color: Colors.amber,
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: dynamicIcon,
-        ),
-      ),
-    );
-  }
+class PackageModel {
+  final String name;
+  final String route;
+  PackageModel({
+    required this.name,
+    required this.route,
+  });
 }

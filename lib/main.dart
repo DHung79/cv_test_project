@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:cv_test_project/core/logger/logger.dart';
 import 'locator.dart';
@@ -26,6 +27,7 @@ final List<Locale> supportedLocales = <Locale>[
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
+  await initHiveForFlutter();
   setupLocator();
   runApp(
     ChangeNotifierProvider<AppStateNotifier>(

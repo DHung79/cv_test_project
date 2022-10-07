@@ -35,6 +35,16 @@ class AppRoutePath {
         routeId = '',
         isUnknown = false;
 
+  AppRoutePath.graphql()
+      : name = graphqlRoute,
+        routeId = '',
+        isUnknown = false;
+
+  AppRoutePath.chopper()
+      : name = chopperRoute,
+        routeId = '',
+        isUnknown = false;
+
   AppRoutePath.unknown()
       : name = null,
         routeId = '',
@@ -59,6 +69,12 @@ class AppRoutePath {
     }
     if (name == homeRoute) {
       return AppRoutePath.home();
+    }
+    if (name == graphqlRoute) {
+      return AppRoutePath.graphql();
+    }
+    if (name == chopperRoute) {
+      return AppRoutePath.chopper();
     }
 
     return AppRoutePath.unknown();

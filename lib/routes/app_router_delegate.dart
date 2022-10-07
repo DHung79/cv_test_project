@@ -1,3 +1,4 @@
+import 'package:cv_test_project/screens/graphql_screen.dart';
 import 'package:flutter/material.dart';
 import '../screens/camera_screen.dart';
 import '../screens/chopper_test.dart';
@@ -57,6 +58,9 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
     //   }
     //   return const ChopperScreen();
     // }
+    if (route == graphqlRoute) {
+      return const GraghqlScreen();
+    }
     return const SizedBox();
   }
 
