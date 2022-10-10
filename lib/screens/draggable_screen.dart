@@ -1,8 +1,6 @@
-import 'package:cv_test_project/core/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:cv_test_project/routes/route_names.dart';
 import 'package:cv_test_project/screens/layout_template.dart';
-import 'package:provider/provider.dart';
 import '../main.dart';
 
 class DraggableScreen extends StatefulWidget {

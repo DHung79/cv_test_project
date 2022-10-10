@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:chopper/chopper.dart';
-import 'package:cv_test_project/core/logger/logger.dart';
 import 'package:cv_test_project/routes/route_names.dart';
 import 'package:flutter/material.dart';
 import '../core/bloc/post_bloc.dart';

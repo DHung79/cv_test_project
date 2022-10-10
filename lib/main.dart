@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:cv_test_project/core/logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'locator.dart';
 import 'routes/app_route_information_parser.dart';
 import 'routes/app_router_delegate.dart';
@@ -11,6 +11,7 @@ import 'scroll_behavior.dart';
 import 'utils/app_state_notifier.dart';
 
 GlobalKey globalMainKey = GlobalKey();
+Future<SharedPreferences> prefs = SharedPreferences.getInstance();
 
 navigateTo(String route) async {
   locator<AppRouterDelegate>().navigateTo(route);

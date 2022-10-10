@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:cv_test_project/themes/button_theme.dart';
 import 'package:flutter/material.dart';
-import '../core/logger/logger.dart';
+import '../core/base/logger/logger.dart';
 import '../main.dart';
 import 'layout_template.dart';
 import 'video_page.dart';

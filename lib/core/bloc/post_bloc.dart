@@ -1,7 +1,7 @@
 import 'package:chopper/chopper.dart';
-import 'package:cv_test_project/core/logger/logger.dart';
 import 'package:cv_test_project/core/models/post_model.dart';
 import 'package:rxdart/rxdart.dart';
+import '../base/logger/logger.dart';
 import '../repositories/post_repo_implement.dart';
 
 enum BlocState {

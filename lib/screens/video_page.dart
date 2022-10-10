@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:cv_test_project/core/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 

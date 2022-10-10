@@ -4,7 +4,6 @@ import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 
 import '../core/bloc/post_bloc.dart';
-import '../core/logger/logger.dart';
 import '../core/models/post_model.dart';
 import 'layout_template.dart';
 
