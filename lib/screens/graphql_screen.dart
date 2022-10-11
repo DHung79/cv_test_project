@@ -1,9 +1,9 @@
 import 'package:cv_test_project/core/base/logger/logger.dart';
 import 'package:cv_test_project/core/media/media.dart';
+import 'package:cv_test_project/core/media/queries/graphql_queries.dart';
 import 'package:cv_test_project/screens/layout_template.dart';
+import 'package:cv_test_project/themes/button_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-
 import '../core/base/rest/models/rest_api_response.dart';
 
 class GraghqlScreen extends StatefulWidget {
@@ -15,147 +15,150 @@ class GraghqlScreen extends StatefulWidget {
 
 class _GraghqlScreenState extends State<GraghqlScreen> {
   final mediaBloc = MediaBloc();
+  int page = 1;
+  int limit = 10;
   @override
   void initState() {
-    mediaBloc.fetchAllData(
-      query: """query () {
-  Page () {
-    pageInfo {
-      total
-      currentPage
-      lastPage
-      hasNextPage
-      perPage
-    }
-    media () {
-      id
-      type
-      title {
-        english
-      }
-    }
-  }
-}""",
-    );
+    _fetchDataOnPage();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
-      child: Container(
-        width: 500,
-        height: 500,
-        child: StreamBuilder<ApiResponse<ListMediaModel?>>(
-          stream: mediaBloc.allData,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final medias = snapshot.data!.model!.records;
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: medias.length,
-                itemBuilder: (context, index) {
-                  final media = medias[index];
-                  return Container(
-                    width: 100,
-                    height: 100, 
-                    color: Colors.amber,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Text(
-                            media.name,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
+      child: StreamBuilder<ApiResponse<ListMediaModel?>>(
+        stream: mediaBloc.allData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final medias = snapshot.data!.model!.records;
+            final meta = snapshot.data!.model!.meta;
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 32, 8, 0),
+                  child: Row(
+                    children: [
+                      JTButton.rounded(
+                        height: 50,
+                        width: 100,
+                        color: Colors.white,
+                        onPressed: () {
+                          setState(() {
+                            if (page > 1) {
+                              page--;
+                              _fetchDataOnPage();
+                            }
+                          });
+                        },
+                        child: Icon(
+                          Icons.navigate_before_outlined,
+                          size: 24,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: JTButton.rounded(
+                          height: 50,
+                          width: 100,
+                          color: Colors.white,
+                          onPressed: () {
+                            setState(() {
+                              if (page < meta.totalPage) {
+                                page++;
+                                _fetchDataOnPage();
+                              }
+                            });
+                          },
+                          child: Icon(
+                            Icons.navigate_next_outlined,
+                            size: 24,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount: medias.length,
+                    itemBuilder: (context, index) {
+                      final media = medias[index];
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                        child: Card(
+                          elevation: 16,
+                          shape: BeveledRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: InkWell(
+                            onTap: () {},
+                            child: Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.horizontal(
+                                    left: Radius.circular(10),
+                                  ),
+                                  child: Image.network(
+                                    media.image,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        media.name,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 16),
+                                        child: Text(
+                                          media.type,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            media.type,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            } else {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          },
-        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
 
-//   void fetchData() async {
-//     HttpLink link = HttpLink("https://graphql.anilist.co/");
-//     GraphQLClient qlClient = GraphQLClient(
-//       link: link,
-//       cache: GraphQLCache(
-//         store: HiveStore(),
-//       ),
-//     );
-//     QueryResult queryResult = await qlClient.query(
-//       QueryOptions(
-//         document: gql(
-//           """query () {
-//   Page () {
-//     pageInfo {
-//       total
-//       currentPage
-//       lastPage
-//       hasNextPage
-//       perPage
-//     }
-//     media () {
-//       id
-//       type
-//       title {
-//         english
-//       }
-//     }
-//   }
-// }""",
-//         ),
-//       ),
-//     );
-
-// // queryResult.data  // contains data
-// // queryResult.exception // will give what exception you got /errors
-// // queryResult.hasException // you can check if you have any exception
-
-// // queryResult.context.entry<HttpLinkResponseContext>()?.statusCode  // to get status code of response
-
-//     setState(() {
-//       data = queryResult.data!['Page']['media'];
-//     });
-//   }
-}
-
-class MediaModel {
-  late int id;
-  late String name;
-  late String type;
-  MediaModel({
-    required this.id,
-    required this.name,
-    required this.type,
-  });
-
-  MediaModel.fromJson(Map<String, dynamic> data) {
-    id = data["id"] ?? 0;
-    name = data["title"]["english"] ?? '';
-    type = data["type"] ?? '';
+  _fetchDataOnPage() {
+    mediaBloc.fetchAllData(
+      query: GraphqlQueries.getMediaList(),
+      variables: {
+        'page': page,
+        'perPage': limit,
+      },
+    );
   }
 }

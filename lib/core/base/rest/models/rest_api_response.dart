@@ -59,19 +59,19 @@ class BaseModel {
     required String key,
     String defaultKey = '_id',
   }) {
-    final _results = <T>[];
+    final results = <T>[];
     if (json[key] != null && json[key] is List<dynamic>) {
       for (var val in json[key]) {
         if (val is String) {
-          _results.add(BaseModel.fromJson<T>({defaultKey: val}));
+          results.add(BaseModel.fromJson<T>({defaultKey: val}));
         } else if (val is Map<String, dynamic>) {
-          _results.add(BaseModel.fromJson<T>(val));
+          results.add(BaseModel.fromJson<T>(val));
         } else {
-          _results.add(BaseModel.fromJson<T>({}));
+          results.add(BaseModel.fromJson<T>({}));
         }
       }
     }
-    return _results;
+    return results;
   }
 
   static T listDynamic<T extends BaseModel>(List<dynamic> list) {
@@ -89,13 +89,13 @@ class BaseModel {
     String defaultKey = '_id',
   }) {
     if (json.containsKey(key)) {
-      final _val = json[key];
-      if (_val is String) {
-        return BaseModel.fromJson<T>({defaultKey: _val});
-      } else if (_val is Map<String, dynamic>) {
-        return BaseModel.fromJson<T>(_val);
-      } else if (_val is List<dynamic> && _val.isNotEmpty) {
-        return BaseModel.fromJson<T>(_val[0]);
+      final val = json[key];
+      if (val is String) {
+        return BaseModel.fromJson<T>({defaultKey: val});
+      } else if (val is Map<String, dynamic>) {
+        return BaseModel.fromJson<T>(val);
+      } else if (val is List<dynamic> && val.isNotEmpty) {
+        return BaseModel.fromJson<T>(val[0]);
       }
     }
     return BaseModel.fromJson({});

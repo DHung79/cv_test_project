@@ -15,14 +15,20 @@ class MediaBloc {
   Stream<BlocState> get allDataState => _allDataState.stream;
   bool _isFetching = false;
 
-  fetchAllData({String query = ''}) async {
+  fetchAllData({
+    String query = '',
+    Map<String, dynamic>? variables,
+  }) async {
     if (_isFetching) return;
     _isFetching = true;
     // Start fetching data.
     _allDataState.sink.add(BlocState.fetching);
     try {
       // Await response from server.
-      final data = await _repository.fetchAllData<ListMediaModel>(query: query);
+      final data = await _repository.fetchAllData<ListMediaModel>(
+        query: query,
+        variables: variables ?? {},
+      );
       if (_allDataFetcher.isClosed) return;
       if (data.error != null) {
         // Error exist

@@ -8,11 +8,13 @@ class RestApiHandlerData {
     required String path,
     Map<String, String>? headers,
     required String query,
+    required Map<String, dynamic> variables,
   }) async {
     final response = await _apiBaseHelper.getGraphql<T>(
       path: path,
       headers: headers,
       query: query,
+      variables: variables,
     );
     return response;
   }

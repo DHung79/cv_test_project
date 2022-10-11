@@ -115,7 +115,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 _initCamera();
               });
             },
-            child: Icon(
+            child: const Icon(
               Icons.cameraswitch_outlined,
               size: 24,
               color: Colors.white,

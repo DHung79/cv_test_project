@@ -9,6 +9,7 @@ class ApiBaseHelper {
   Future<ApiResponse<T>> getGraphql<T extends BaseModel>({
     required String path,
     required String query,
+    required Map<String, dynamic> variables,
     Map<String, String>? headers,
   }) async {
     ApiResponse<T> responseJson;
@@ -22,6 +23,7 @@ class ApiBaseHelper {
       QueryResult queryResult = await qlClient.query(
         QueryOptions(
           document: gql(query),
+          variables: variables,
         ),
       );
       responseJson = _returnQueryResult<T>(queryResult);
@@ -319,22 +321,22 @@ class ApiBaseHelper {
       }
     } else if (response.statusCode >= 400 && response.statusCode < 500) {
       var parsedJson = json.decode(response.body.toString());
-      ApiError _error;
+      ApiError error;
       if (parsedJson is String) {
-        _error = ApiError.fromJson(
+        error = ApiError.fromJson(
           {'error_code': response.statusCode, 'error_message': parsedJson},
         );
       } else if (parsedJson is Map<String, dynamic>) {
-        _error = ApiError.fromJson(parsedJson);
+        error = ApiError.fromJson(parsedJson);
       } else {
-        _error = ApiError.fromJson(
+        error = ApiError.fromJson(
           {
             'error_code': response.statusCode,
             'error_message': parsedJson.toString(),
           },
         );
       }
-      if (_error.errorMessage == 'token expired') {
+      if (error.errorMessage == 'token expired') {
         // Unauthenticated
         // AuthenticationBlocController().authenticationBloc.add(TokenExpired());
       }
@@ -358,22 +360,22 @@ class ApiBaseHelper {
       return ApiResponse(BaseModel.fromJson<T>(responseJson), null);
     } else if (response.statusCode >= 400 && response.statusCode < 500) {
       var parsedJson = json.decode(response.body.toString());
-      ApiError _error;
+      ApiError error;
       if (parsedJson is String) {
-        _error = ApiError.fromJson(
+        error = ApiError.fromJson(
           {'error_code': response.statusCode, 'error_message': parsedJson},
         );
       } else if (parsedJson is Map<String, dynamic>) {
-        _error = ApiError.fromJson(parsedJson);
+        error = ApiError.fromJson(parsedJson);
       } else {
-        _error = ApiError.fromJson(
+        error = ApiError.fromJson(
           {
             'error_code': response.statusCode,
             'error_message': parsedJson.toString(),
           },
         );
       }
-      if (_error.errorMessage == 'token expired') {
+      if (error.errorMessage == 'token expired') {
         // Unauthenticated
         // AuthenticationBlocController().authenticationBloc.add(TokenExpired());
       }
@@ -452,33 +454,33 @@ class ApiBaseHelper {
       http.Response response) {
     if (response.statusCode == 200) {
       var responseJson = json.decode(response.body.toString());
-      List<T> _list = [];
+      List<T> list = [];
       if (responseJson is List<dynamic>) {
         for (var parsedJson in responseJson) {
           if (parsedJson is Map<String, dynamic>) {
-            _list.add(BaseModel.fromJson<T>(parsedJson));
+            list.add(BaseModel.fromJson<T>(parsedJson));
           }
         }
       }
-      return ApiResponse(_list, null);
+      return ApiResponse(list, null);
     } else if (response.statusCode >= 400 && response.statusCode < 500) {
       var parsedJson = json.decode(response.body.toString());
-      ApiError _error;
+      ApiError error;
       if (parsedJson is String) {
-        _error = ApiError.fromJson(
+        error = ApiError.fromJson(
           {'error_code': response.statusCode, 'error_message': parsedJson},
         );
       } else if (parsedJson is Map<String, dynamic>) {
-        _error = ApiError.fromJson(parsedJson);
+        error = ApiError.fromJson(parsedJson);
       } else {
-        _error = ApiError.fromJson(
+        error = ApiError.fromJson(
           {
             'error_code': response.statusCode,
             'error_message': parsedJson.toString(),
           },
         );
       }
-      if (_error.errorMessage == 'token expired') {
+      if (error.errorMessage == 'token expired') {
         // Unauthenticated
         // AuthenticationBlocController().authenticationBloc.add(TokenExpired());
       }
@@ -572,22 +574,22 @@ class ApiBaseHelper {
       }
     } else if (response.statusCode >= 400 && response.statusCode < 500) {
       var parsedJson = json.decode(response.body.toString());
-      ApiError _error;
+      ApiError error;
       if (parsedJson is String) {
-        _error = ApiError.fromJson(
+        error = ApiError.fromJson(
           {'error_code': response.statusCode, 'error_message': parsedJson},
         );
       } else if (parsedJson is Map<String, dynamic>) {
-        _error = ApiError.fromJson(parsedJson);
+        error = ApiError.fromJson(parsedJson);
       } else {
-        _error = ApiError.fromJson(
+        error = ApiError.fromJson(
           {
             'error_code': response.statusCode,
             'error_message': parsedJson.toString(),
           },
         );
       }
-      if (_error.errorMessage == 'token expired') {
+      if (error.errorMessage == 'token expired') {
         // Unauthenticated
         // AuthenticationBlocController().authenticationBloc.add(TokenExpired());
       }

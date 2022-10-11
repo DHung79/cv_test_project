@@ -12,7 +12,7 @@ class DraggableScreen extends StatefulWidget {
 
 class _DraggableScreenState extends State<DraggableScreen> {
 
-  Widget dynamicIcon = Text('Drag the icon in here');
+  Widget dynamicIcon = const Text('Drag the icon in here');
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
@@ -29,51 +29,51 @@ class _DraggableScreenState extends State<DraggableScreen> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               Draggable<Widget>(
                 data: Icon(Icons.adb_sharp),
-                feedback: Container(
+                feedback: SizedBox(
                   height: 100,
                   width: 100,
-                  child: const Center(
+                  child: Center(
                     child: Icon(Icons.adb_sharp),
                   ),
                 ),
-                childWhenDragging: Container(
+                childWhenDragging: SizedBox(
                   height: 100.0,
                   width: 100.0,
-                  child: const Center(
+                  child: Center(
                     child: Icon(Icons.adb_sharp),
                   ),
                 ),
-                child: Container(
+                child: SizedBox(
                   height: 100.0,
                   width: 100.0,
-                  child: const Center(
+                  child: Center(
                     child: Icon(Icons.adb_sharp),
                   ),
                 ),
               ),
               Draggable<Widget>(
                 data: Icon(Icons.face),
-                feedback: Container(
+                feedback: SizedBox(
                   height: 100,
                   width: 100,
-                  child: const Center(
+                  child: Center(
                     child: Icon(Icons.face),
                   ),
                 ),
-                childWhenDragging: Container(
+                childWhenDragging: SizedBox(
                   height: 100.0,
                   width: 100.0,
-                  child: const Center(
+                  child: Center(
                     child: Icon(Icons.face),
                   ),
                 ),
-                child: Container(
+                child: SizedBox(
                   height: 100.0,
                   width: 100.0,
-                  child: const Center(
+                  child: Center(
                     child: Icon(Icons.face),
                   ),
                 ),

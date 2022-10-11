@@ -27,7 +27,7 @@ final List<Locale> supportedLocales = <Locale>[
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
+  // cameras = await availableCameras();
   await initHiveForFlutter();
   setupLocator();
   runApp(

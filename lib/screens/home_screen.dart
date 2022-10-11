@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: packages.length,
         itemBuilder: (context, index) {
           final package = packages[index];
-          return Container(
+          return SizedBox(
             width: 150,
             height: 150,
             // color: Colors.blueAccent,

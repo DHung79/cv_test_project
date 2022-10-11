@@ -1,9 +1,7 @@
 import 'package:cv_test_project/screens/graphql_screen.dart';
 import 'package:flutter/material.dart';
 import '../screens/camera_screen.dart';
-import '../screens/chopper_test.dart';
 import '../screens/home_screen.dart';
-import '../screens/post_page.dart';
 import 'no_animation_transition_delegate.dart';
 import 'route_names.dart';
 import 'route_path.dart';

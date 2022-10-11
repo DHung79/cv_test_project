@@ -9,13 +9,15 @@ import '../../base/rest/rest_api_handler_data.dart';
 class MediaApiProvider {
   Future<ApiResponse<T?>> fetchAllMedia<T extends BaseModel>({
     required String query,
+    required Map<String, dynamic> variables,
   }) async {
-    var path = ApiConstants.apiDomain + ApiConstants.apiVersion;
+    var path = ApiConstants.apiDomain;
     final token = await ApiHelper.getUserToken();
     final response = await RestApiHandlerData.getGraphql<T>(
       path: path,
       headers: ApiHelper.headers(token),
       query: query,
+      variables: variables,
     );
     return response;
   }
@@ -23,7 +25,7 @@ class MediaApiProvider {
   Future<ApiResponse<T?>> fetchMediaById<T extends BaseModel>({
     String? id,
   }) async {
-    final path = ApiConstants.apiDomain + ApiConstants.apiVersion + '/$id';
+    final path = '${ApiConstants.apiDomain}${ApiConstants.apiVersion}/$id';
     final token = await ApiHelper.getUserToken();
     final response = await RestApiHandlerData.getData<T>(
       path: path,
@@ -36,7 +38,7 @@ class MediaApiProvider {
     required String id,
     required String reason,
   }) async {
-    final path = ApiConstants.apiDomain + ApiConstants.apiVersion + '/$id';
+    final path = '${ApiConstants.apiDomain}${ApiConstants.apiVersion}/$id';
 
     final body = convert.jsonEncode({
       "failure_reason": {"reason": reason}
@@ -72,7 +74,7 @@ class MediaApiProvider {
     K? editModel,
     String? id,
   }) async {
-    final path = ApiConstants.apiDomain + ApiConstants.apiVersion + '/$id';
+    final path = '${ApiConstants.apiDomain}${ApiConstants.apiVersion}/$id';
     final body = convert.jsonEncode(EditBaseModel.toEditJson(editModel!));
     final token = await ApiHelper.getUserToken();
     logDebug('path: $path\nbody: $body');

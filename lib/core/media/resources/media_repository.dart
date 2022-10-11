@@ -17,8 +17,12 @@ class MediaRepository {
 
   Future<ApiResponse<T?>> fetchAllData<T extends BaseModel>({
     required String query,
+    required Map<String, dynamic> variables,
   }) =>
-      _provider.fetchAllMedia<T>(query: query);
+      _provider.fetchAllMedia<T>(
+        query: query,
+        variables: variables,
+      );
 
   Future<ApiResponse<T?>> fetchDataById<T extends BaseModel>({
     String? id,
