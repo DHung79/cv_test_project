@@ -1,32 +1,20 @@
 import '../../base/rest/models/rest_api_response.dart';
 import '../../base/models/common_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class MediaModel extends BaseModel {
-  final int _id;
-  final String _type;
-  final String _name;
-  final String _image;
+part 'media_model.freezed.dart';
+part 'media_model.g.dart';
 
-  MediaModel.fromJson(Map<String, dynamic> json)
-      :
-        // _user = BaseModel.map<UserModel>(
-        //   json: json,
-        //   key: 'posted_user',
-        // ),
-        _id = json['id'] ?? '',
-        _type = json['type'] ?? '',
-        _name = json['title']['romaji'] ?? '',
-        _image = json['coverImage']['large'] ?? '';
-
-  Map<String, dynamic> toJson() => {
-        'id': _id,
-        'type': type,
-        'name': _name,
-      };
-  int get id => _id;
-  String get type => _type;
-  String get name => _name;
-  String get image => _image;
+@freezed
+abstract class MediaModel extends BaseModel with _$MediaModel {
+  const factory MediaModel({
+    int? id,
+    String? name,
+    String? type,
+    String? image,
+  }) = _MediaModel;
+  factory MediaModel.fromJson(Map<String, Object?> json) =>
+      _$MediaModelFromJson(json);
 }
 
 class EditMediaModel extends EditBaseModel {

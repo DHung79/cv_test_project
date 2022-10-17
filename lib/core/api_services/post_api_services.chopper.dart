@@ -28,7 +28,7 @@ class _$PostApiServices extends PostApiServices {
   }
 
   @override
-  Future<Response> specialPost(int id) {
+  Future<Response<dynamic>> specialPost(int id) {
     final $url = '/posts/${id}';
     final $request = Request(
       'GET',

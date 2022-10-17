@@ -103,7 +103,7 @@ class _GraghqlScreenState extends State<GraghqlScreen> {
                                     left: Radius.circular(10),
                                   ),
                                   child: Image.network(
-                                    media.image,
+                                    media.image!,
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -111,7 +111,7 @@ class _GraghqlScreenState extends State<GraghqlScreen> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        media.name,
+                                        media.name!,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           color: Colors.black,
@@ -122,7 +122,7 @@ class _GraghqlScreenState extends State<GraghqlScreen> {
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 16),
                                         child: Text(
-                                          media.type,
+                                          media.type!,
                                           style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 14,
